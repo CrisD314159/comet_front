@@ -9,7 +9,8 @@ export async function SignUp(formstate:FormResponse, formdata:FormData) {
     name : formdata.get("name"),
     country:formdata.get("country"),
     email: formdata.get("email"),
-    password: formdata.get("password")
+    password: formdata.get("password"),
+    profilePictureUrl:formdata.get("profilePicture")
   })
 
   if(!validations.success){
