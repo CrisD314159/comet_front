@@ -1,3 +1,4 @@
+'use server'
 import { APIURL, FormResponse } from "@/lib/types/types";
 import { changePassword, updateUser, verifyAccount } from "@/lib/zodValidations/zodValidations";
 import { checkIsLoggedIn } from "../authActions/Auth";

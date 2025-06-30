@@ -1,3 +1,4 @@
+'use server'
 import { APIURL, FormResponse } from "@/lib/types/types";
 import { resetAccount, signupValidations } from "@/lib/zodValidations/zodValidations";
 import { checkIsLoggedIn } from "../authActions/Auth";
@@ -7,7 +8,7 @@ import { cookies } from "next/headers";
 export async function SignUp(formstate:FormResponse, formdata:FormData) {
   const validations = signupValidations.safeParse({
     name : formdata.get("name"),
-    country:formdata.get("country"),
+    country:formdata.get("location"),
     email: formdata.get("email"),
     password: formdata.get("password"),
     profilePictureUrl:formdata.get("profilePicture")
@@ -16,7 +17,7 @@ export async function SignUp(formstate:FormResponse, formdata:FormData) {
   if(!validations.success){
     return {
       success: false,
-      message: validations.error.flatten().fieldErrors
+      message: validations.error.message
     }
   }
 

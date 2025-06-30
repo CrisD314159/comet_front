@@ -1,3 +1,4 @@
+'use server'
 import { APIURL, FormResponse } from "@/lib/types/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -54,7 +55,7 @@ export async function LogIn(formstate:FormResponse, formdata:FormData) {
   } catch {
     return {
       success:false,
-      message:"An error occurred while trying to connect to api"
+      message:"An error occurred while trying to connect to server"
     }
   }
 

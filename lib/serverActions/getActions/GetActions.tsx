@@ -1,3 +1,4 @@
+'use server'
 import { cookies } from "next/headers";
 import { checkIsLoggedIn } from "../authActions/Auth";
 import { APIURL } from "@/lib/types/types";
