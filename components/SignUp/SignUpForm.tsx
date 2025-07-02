@@ -2,20 +2,17 @@
 
 import { SignUp } from "@/lib/serverActions/postActions/PostActions"
 import { startTransition, useActionState, useEffect, useState } from "react"
-import Alert from "../Alert/Alert"
 import ProfilePictureChooser from "../ProfilePicture/ProfilePictureChooser"
+import toast from "react-hot-toast"
 
 export default function SignUpForm() {
   const picUrl = "https://api.dicebear.com/9.x/fun-emoji/svg?seed="
   const [state, action, pending] = useActionState(SignUp, undefined)
-  const [alert, setAlert] = useState(false)
-  const [alertMessage, setAlertMessage] = useState('')
   const [profileSeed, setProfileSeed] = useState('Aidan')
 
   useEffect(()=>{
     if(state?.success === false){
-      setAlertMessage(state?.message)
-      setAlert(true)
+      toast.error(state.message)
     }
   }, [state])
 
@@ -33,7 +30,6 @@ export default function SignUpForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <Alert message={alertMessage} open={alert} setOpen={setAlert} type="error"/>
             <ProfilePictureChooser setSeed={setProfileSeed} url={`${picUrl}${profileSeed}`}/>
             <div className="flex w-full justify-center items-center gap-3">
               <div>

@@ -6,7 +6,7 @@ import { checkIsLoggedIn } from './lib/serverActions/authActions/Auth';
  
 // 1. Specify protected and public routes
 const protectedRoutesRegex = [
-  /^\/dashboard\/userOverview$/
+  /^\/dashboard(?:\/.*)?$/
 ];
 
 const publicRoutes = ['/', '/signup', '/verifyAccount']

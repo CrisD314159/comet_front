@@ -1,19 +1,16 @@
 'use client'
 
 import { LogIn } from "@/lib/serverActions/authActions/Auth"
-import { startTransition, useActionState, useEffect, useState } from "react"
-import Alert from "../Alert/Alert"
+import { startTransition, useActionState, useEffect } from "react"
+import toast from "react-hot-toast"
 
 
 export default function LoginForm() {
   const [state, action, pending] = useActionState(LogIn, undefined)
-  const [alert, setAlert] = useState(false)
-  const [alertMessage, setAlertMessage] = useState('')
 
   useEffect(()=>{
     if(state?.success === false){
-      setAlertMessage(state?.message)
-      setAlert(true)
+        toast.error(state.message)
     }
   }, [state])
 
@@ -29,7 +26,6 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} method="POST" className="space-y-6">
-      <Alert message={alertMessage} open={alert} setOpen={setAlert} type="error"/>
             <div>
               <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900 dark:text-gray-100">
                 Email address

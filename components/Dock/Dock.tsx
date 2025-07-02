@@ -16,7 +16,7 @@ interface TabsProps {
   children: ReactElement<TabProps>[]
 }
 
-const Tabs = ({ children }: TabsProps) => {
+const Dock = ({ children }: TabsProps) => {
   const params = useSearchParams()
   const router = useRouter()
   const [activeTabKey, setActiveTabKey] = useState(children[0]?.props.tabkey)
@@ -46,8 +46,9 @@ const Tabs = ({ children }: TabsProps) => {
   const activeChild = children.find(child => child?.props?.tabkey === activeTabKey)
 
   return (
-    <div className="flex h-full w-full">
-      <div className="flex flex-col justify-center h-full w-[50px] space-y-4 backdrop-blur-xs shadow-md p-2">
+    <div className="flex sm:flex-row flex-col h-full w-full max-md:relative ">
+      <div className="flex sm:flex-col flex-row justify-center sm:h-full sm:w-[50px] w-full space-y-4 backdrop-blur-xs
+       shadow-md p-2 absolute bottom-0 items-center z-50">
         {children.map(child => {
           if (!child?.props) return null
           return (
@@ -55,8 +56,8 @@ const Tabs = ({ children }: TabsProps) => {
               key={child.props.tabkey}
               href="#"
               onClick={e => handleClick(e, child.props.tabkey, child.props.onClick)}
-              className={`w-[95%] flex items-center justify-center py-2 rounded-2xl shadow-lg  dark:text-white ${
-                activeTabKey === child.props.tabkey ? 'bg-indigo-600 ' : 'backdrop-blur-xl'
+              className={`sm:w-[95%] w-[80%] flex items-center justify-center py-2 rounded-2xl shadow-lg max-md:mb-1  dark:text-white ${
+                activeTabKey === child.props.tabkey ? 'bg-indigo-600 text-white' : 'backdrop-blur-xl'
               }`}
             >
               <child.props.icon />
@@ -64,9 +65,9 @@ const Tabs = ({ children }: TabsProps) => {
           )
         })}
       </div>
-      <div className="w-full p-3">{activeChild}</div>
+      <div className="w-full">{activeChild}</div>
     </div>
   )
 }
 
-export default Tabs
+export default Dock

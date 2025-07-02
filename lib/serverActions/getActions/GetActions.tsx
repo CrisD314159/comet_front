@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { checkIsLoggedIn } from "../authActions/Auth";
 import { APIURL } from "@/lib/types/types";
 
-export async function GetFriends(){
+export async function GetUserFriends(){
   return await GetGeneralMethod("/users/getFriends")
 }
 
@@ -17,6 +17,10 @@ export async function GetFriendRequests(){
 
 export async function GetUserOverview(){
   return await GetGeneralMethod("/users/profile")
+}
+
+export async function GetUserChatToken(){
+  return await GetGeneralMethod("/chat")
 }
 
 async function GetGeneralMethod(path:string){
