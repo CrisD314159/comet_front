@@ -1,12 +1,16 @@
 'use client'
 import { UserInfo } from "@/lib/types/types"
-import { Info, LockKeyhole, MessageCircle, UserMinus } from "lucide-react"
+import {LockKeyhole, MessageCircle, UserMinus, LockKeyholeOpen } from "lucide-react"
+import FriendActionModal from "./FriendCardActions/FriendActionModal"
+import { BlockFriend, DeleteFriend, UnblockFriend } from "@/lib/serverActions/putActions/PutActions"
 
 interface FriendCardProps{
   friend: UserInfo
+  mutate: () => void
+  blocked:boolean
 }
 
-export default function FriendCard({friend}:FriendCardProps) {
+export default function FriendCard({friend, mutate, blocked}:FriendCardProps) {
   return(
 <div className="w-[95%] h-[250px] max-md:h-[310px] flex sm:flex-row flex-col justify-between  mx-auto border border-white/20 rounded-2xl my-10 p-6 bg-white/5 backdrop-blur-md shadow-xl hover:shadow-indigo-500/30 transition-shadow duration-300 dark:text-white">
   <div>
@@ -26,10 +30,38 @@ export default function FriendCard({friend}:FriendCardProps) {
   </div>
 
   <div className="flex items-center max-md:justify-center max-md:gap-1 gap-6 my-4">
-    <button className="btn btn-soft btn-info"><Info/></button>
-    <button className="btn btn-soft btn-primary"><MessageCircle/></button>
-    <button className="btn btn-soft btn-error"><UserMinus/></button>
-    <button className="btn btn-soft btn-dash"><LockKeyhole/></button>
+    {
+      blocked ?
+      <FriendActionModal ButtonIcon={LockKeyholeOpen}
+      buttonColor="accent" 
+      action={UnblockFriend} 
+      actionText="Unblock Friend" 
+      mutate={mutate} 
+      title="Are you sure you want to unblock this friend" 
+      user={friend}/>
+      :
+      <>
+        <button className="btn btn-soft btn-primary"><MessageCircle/></button>
+        <FriendActionModal ButtonIcon={UserMinus} 
+        action={DeleteFriend} 
+        buttonColor="error"
+        actionText="Delete Friend" 
+        mutate={mutate} 
+        title="Are you sure you want to delete this friend" 
+        user={friend}/>
+
+        <FriendActionModal ButtonIcon={LockKeyhole}
+        buttonColor="warning" 
+        action={BlockFriend} 
+        actionText="Block Friend" 
+        mutate={mutate} 
+        title="Are you sure you want to block this friend" 
+        user={friend}/>
+      
+      </>
+
+    }
+
   </div>
 </div>
   )

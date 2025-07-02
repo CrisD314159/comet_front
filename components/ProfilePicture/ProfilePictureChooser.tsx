@@ -2,9 +2,10 @@
 interface ProfilePictureChooserProps{
   url:string
   setSeed:(seed:string) => void
+  small:boolean
 }
 
-export default function ProfilePictureChooser({setSeed, url}:ProfilePictureChooserProps) {
+export default function ProfilePictureChooser({setSeed, url, small}:ProfilePictureChooserProps) {
 
   const seeds = ['Aidan', 'Kingston', 'Jude', 'Christopher', 'Mackenzie', 'Jack', 'Valentina', 'Oliver', 'Destiny', 'Brian',
     'Mason', 'Easton', 'Christian', 'Liam', 'Jade', 'Katherine', 'Leah']
@@ -22,7 +23,7 @@ export default function ProfilePictureChooser({setSeed, url}:ProfilePictureChoos
   return (
     <div className="flex flex-col items-center gap-4">
       <div className="avatar">
-        <div className="w-48 rounded-full">
+        <div className={`${small ? 'w-28' : 'w-48'} rounded-full`}>
           <img src={url} />
         </div>
       </div>

@@ -25,8 +25,11 @@ export default function RootLayout({
       <body
         className={`${urbanist.variable} antialiased h-full`}
       >
+        <div>
+          <Toaster/>
+        </div>
         {children}
-        <Toaster/>
+
       </body>
     </html>
   );

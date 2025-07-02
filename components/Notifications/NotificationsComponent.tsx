@@ -26,7 +26,7 @@ export default function NotificationsComponent() {
 
   return (
       <div className={`flex flex-col h-screen w-full`} >
-        <h1 className="text-3xl font-bold my-10 sm:ml-20  mx-6">Notifications</h1>
+        <h1 className="text-3xl font-bold mt-10 mb-2 sm:ml-20  mx-6">Notifications</h1>
           <div className="mx-auto  ">
             <div className="w-full flex justify-center ">
               <div className="w-[300px] h-16 rounded-4xl shadow-2xl top-25

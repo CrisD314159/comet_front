@@ -30,7 +30,7 @@ export default function SignUpForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-            <ProfilePictureChooser setSeed={setProfileSeed} url={`${picUrl}${profileSeed}`}/>
+            <ProfilePictureChooser small={false} setSeed={setProfileSeed} url={`${picUrl}${profileSeed}`}/>
             <div className="flex w-full justify-center items-center gap-3">
               <div>
                 <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900 dark:text-gray-100">

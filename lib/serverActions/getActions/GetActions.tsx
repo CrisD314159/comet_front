@@ -7,6 +7,10 @@ export async function GetUserFriends(){
   return await GetGeneralMethod("/users/getFriends")
 }
 
+export async function GetUserBlockedFriends(){
+  return await GetGeneralMethod("/users/getBlockedFriends")
+}
+
 export async function GetOutgoingFriendRequests(){
   return await GetGeneralMethod("/friends/getOutgoingRequests")
 }

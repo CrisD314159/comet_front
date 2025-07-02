@@ -29,7 +29,8 @@ export async function UpdateUser(formResponse:FormResponse, formdata:FormData) {
   const validations = updateUser.safeParse({
     id:formdata.get("id"),
     name:formdata.get("name"),
-    profilePicture:formdata.get("biography"),
+    biography:formdata.get("biography"),
+    profilePicture:formdata.get("profilePicture"),
     country:formdata.get("country")
 
   })
@@ -37,7 +38,7 @@ export async function UpdateUser(formResponse:FormResponse, formdata:FormData) {
   if(!validations.success){
   return {
     success: false,
-    message: validations.error.flatten().fieldErrors
+    message: validations.error.errors.toString()
     }
   }
 
