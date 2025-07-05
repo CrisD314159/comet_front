@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
+import 'stream-chat-react/dist/css/v2/index.css';
 
 const urbanist = Urbanist({
   variable: "--font-geist-sans",

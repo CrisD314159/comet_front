@@ -1,7 +1,7 @@
 'use server'
 import { cookies } from "next/headers";
 import { checkIsLoggedIn } from "../authActions/Auth";
-import { APIURL } from "@/lib/types/types";
+import { APIURL, isNullOrEmpty } from "@/lib/types/types";
 
 export async function GetUserFriends(){
   return await GetGeneralMethod("/users/getFriends")
@@ -27,8 +27,14 @@ export async function GetUserChatToken(){
   return await GetGeneralMethod("/chat")
 }
 
+
+export async function GetSearchUsers(name:string, offset:number, limit:number){
+  if(isNullOrEmpty(name)) return 
+  return await GetGeneralMethod(`/users/search?name=${name}&offset=${offset}&limit=${limit}`)
+}
+
 async function GetGeneralMethod(path:string){
-    await checkIsLoggedIn()
+  await checkIsLoggedIn()
   const token = (await cookies()).get("token")?.value
 
   let response : Response 

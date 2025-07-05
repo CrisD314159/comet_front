@@ -16,6 +16,10 @@ const NotificationsComponentDynamic = dynamic(()=> import ("@/components/Notific
   ssr:false
 }) 
 
+const SearchComponentDynamic = dynamic(()=> import ("@/components/Search/SearchMainComponent"), {
+  ssr:false
+}) 
+
 export default function DashboardPage() {
   return (
     <Tabs>
@@ -30,7 +34,9 @@ export default function DashboardPage() {
         </Suspense>
       </Tab>
       <Tab title="Search" icon={Search} tabkey="search">
-        Search
+       <Suspense fallback={<span className="loading loading-infinity loading-xl"></span>}>
+          <SearchComponentDynamic/>
+        </Suspense>
       </Tab>
       <Tab title="Settings" icon={Settings} tabkey="settings">
         <Suspense fallback={<span className="loading loading-infinity loading-xl"></span>}>

@@ -4,7 +4,7 @@ import useSWR from "swr"
 import NotificationCard from "./NotificationCard"
 
 export default function IncomingNotifications() {
-  const {data, error, isLoading} = useSWR<{friendRequest: FriendRequestInfo[]}>('incoming', GetFriendRequests)
+  const {data, error, isLoading, mutate} = useSWR<{friendRequest: FriendRequestInfo[]}>('incoming', GetFriendRequests)
 
   return (
     <div className="w-full h-full">
@@ -20,7 +20,7 @@ export default function IncomingNotifications() {
           (
             data.friendRequest.map(request =>{
               return (
-                <NotificationCard notification={request} key={request.id} incoming={true}/>
+                <NotificationCard notification={request} key={request.id} incoming={true} mutate={mutate}/>
               )
             })
           ):

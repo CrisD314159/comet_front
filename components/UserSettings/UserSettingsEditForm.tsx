@@ -14,7 +14,13 @@ interface UserSettingsEditFormProps{
 export default function UserSettingsEditForm({handleClose, user, mutate}:UserSettingsEditFormProps) {
   const picUrl = "https://api.dicebear.com/9.x/fun-emoji/svg?seed="
   const [state, action, pending] = useActionState(UpdateUser, undefined)
+  const [googleUser, setGoogleUser] = useState(user.createdWithGoogle)
   const [profileSeed, setProfileSeed] = useState(user.profilePicture.split('=')[1] ?? 'Aidan')
+
+  const handleSetSeed = (seed:string) =>{
+    if(googleUser) setGoogleUser(false)
+    setProfileSeed(seed)
+  }
 
   useEffect(()=>{
     if(state?.success === false && state.message){
@@ -26,10 +32,13 @@ export default function UserSettingsEditForm({handleClose, user, mutate}:UserSet
   }, [state, handleClose])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    console.log("Entraaaaaa");
     event.preventDefault()
     const formdata = new FormData(event.currentTarget)
-    formdata.set("profilePicture", `${picUrl}${profileSeed}`)
+    if(googleUser){
+      formdata.set("profilePicture", `${user.profilePicture}`)
+    }else{
+      formdata.set("profilePicture", `${picUrl}${profileSeed}`)
+    }
     formdata.set('id', user.id)
 
     startTransition(() => {
@@ -44,7 +53,7 @@ export default function UserSettingsEditForm({handleClose, user, mutate}:UserSet
   return (
     <>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <ProfilePictureChooser small setSeed={setProfileSeed} url={`${picUrl}${profileSeed}`}/>
+        <ProfilePictureChooser small setSeed={handleSetSeed} url={googleUser ? user.profilePicture : `${picUrl}${profileSeed}`}/>
         <div className="flex flex-col w-full justify-center items-center gap-3">
           <div>
             <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900 dark:text-gray-100">

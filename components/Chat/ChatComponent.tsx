@@ -1,8 +1,7 @@
+'use client'
 import { useEffect, useState } from "react";
-
-
 import {
-  Channel,
+  Channel as ChannelComponent,
   ChannelHeader,
   Chat,
   MessageInput,
@@ -10,27 +9,37 @@ import {
   Thread,
   Window,
 } from "stream-chat-react";
-import { StreamChat } from "stream-chat";
+import { Channel, StreamChat } from "stream-chat";
 
 import CallButton from "../Calls/CallButton";
 import toast from "react-hot-toast";
+import useSWR from "swr";
+import { GetUserChatToken, GetUserOverview } from "@/lib/serverActions/getActions/GetActions";
+import { ChatTokenResponse, getChannelId, UserInfo } from "@/lib/types/types";
+import { House } from "lucide-react";
+import Link from "next/link";
 interface ChatProps{
-  id:string
+  targetUserId:string
 
 }
-const STREAM_API_KEY = process.env.VITE_STREAM_API_KEY ?? "";
+const STREAM_API_KEY = process.env.NEXT_STEAM_API_KEY ?? "";
 
-export default function ChatComponent({id}:ChatProps) {
+export default function ChatComponent({targetUserId}:ChatProps) {
   
-    const [chatClient, setChatClient] = useState(null);
-    const [channel, setChannel] = useState(null);
+    const [chatClient, setChatClient] = useState<StreamChat | null>(null);
+    const [channel, setChannel] = useState<Channel | null>(null);
     const [loading, setLoading] = useState(true);
+
+    const {data: userData, error: userError, isLoading: userIsLoading} = useSWR<UserInfo>('authUser', GetUserOverview)
+
+    const {data: tokenData, error: tokenError, isLoading: isTokenLoaiding} = useSWR<ChatTokenResponse>('token', GetUserChatToken)
+
 
     /// usar swr para el token
   
     useEffect(() => {
       const initChat = async () => {
-        if (!tokenData?.token || !authUser) return;
+        if (!tokenData?.token || !userData) return;
   
         try {
           console.log("Initializing stream chat client...");
@@ -39,22 +48,22 @@ export default function ChatComponent({id}:ChatProps) {
   
           await client.connectUser(
             {
-              id: authUser._id,
-              name: authUser.fullName,
-              image: authUser.profilePic,
+              id: userData.id,
+              name: userData.name,
+              image: userData.profilePicture,
             },
             tokenData.token
           );
   
           //
-          const channelId = [authUser._id, targetUserId].sort().join("-");
+          const channelId = await getChannelId(userData.id, targetUserId);
   
           // you and me
           // if i start the chat => channelId: [myId, yourId]
           // if you start the chat => channelId: [yourId, myId]  => [myId,yourId]
   
           const currChannel = client.channel("messaging", channelId, {
-            members: [authUser._id, targetUserId],
+            members: [userData.id, targetUserId],
           });
   
           await currChannel.watch();
@@ -70,7 +79,7 @@ export default function ChatComponent({id}:ChatProps) {
       };
   
       initChat();
-    }, [tokenData, authUser, targetUserId]);
+    }, [tokenData, userData, targetUserId]);
   
     const handleVideoCall = () => {
       if (channel) {
@@ -84,13 +93,31 @@ export default function ChatComponent({id}:ChatProps) {
       }
     };
   
-    if (loading || !chatClient || !channel) return <span className="loading loading-infinity loading-xl"></span>;
+    if (loading || !chatClient || !channel || userIsLoading || isTokenLoaiding) return (
+      <div className="w-full h-full flex justify-center items-center">
+        <span className="loading loading-infinity loading-xl"></span>
+      </div>
+    );
+
+    if (userError || tokenError) return (
+      <div className="w-full h-full flex justify-center items-center">
+        <p>An error occurred while loading the call</p>
+      </div>
+    );
   
     return (
-      <div className="h-[93vh]">
+      <div className="h-full">
         <Chat client={chatClient}>
-          <Channel channel={channel}>
+          <ChannelComponent channel={channel} >
             <div className="w-full relative">
+            
+              <div className="p-3 border-b flex items-center z-50 justify-end max-w-7xl mx-auto w-full absolute top-0 right-15">
+                <Link href="/dashboard">
+                  <button className="btn btn-info btn-sm text-white">
+                    <House/>
+                  </button>
+                </Link>
+              </div>
               <CallButton handleVideoCall={handleVideoCall} />
               <Window>
                 <ChannelHeader />
@@ -99,7 +126,7 @@ export default function ChatComponent({id}:ChatProps) {
               </Window>
             </div>
             <Thread />
-          </Channel>
+          </ChannelComponent>
         </Chat>
       </div>
     )

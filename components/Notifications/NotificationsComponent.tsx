@@ -17,10 +17,6 @@ export default function NotificationsComponent() {
   {
     name:"Outgoing",
     tabkey:"outgoing",
-  },
-  {
-    name:"Messages",
-    tabkey:"messages",
   }]
 
 
@@ -29,7 +25,7 @@ export default function NotificationsComponent() {
         <h1 className="text-3xl font-bold mt-10 mb-2 sm:ml-20  mx-6">Notifications</h1>
           <div className="mx-auto  ">
             <div className="w-full flex justify-center ">
-              <div className="w-[300px] h-16 rounded-4xl shadow-2xl top-25
+              <div className="w-[200px] h-16 rounded-4xl shadow-2xl top-25
               flex justify-center items-center gap-2 dark:bg-neutral-900
               ">
                 {tabs.map((tab)=>{
@@ -49,7 +45,6 @@ export default function NotificationsComponent() {
 
             {tabname ==='incoming' && (<IncomingFriendRequestsDynamic/>)}
             {tabname ==='outgoing' && (<OutgoingFriendRequestsDynamic/>)}
-            {tabname ==='messages' && (<p>Not implemented yet</p>)}
 
           </div>
       </div>

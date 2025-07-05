@@ -1,10 +1,10 @@
-import { GetFriendRequests } from "@/lib/serverActions/getActions/GetActions"
+import { GetOutgoingFriendRequests } from "@/lib/serverActions/getActions/GetActions"
 import { FriendRequestInfo } from "@/lib/types/types"
 import useSWR from "swr"
 import NotificationCard from "./NotificationCard"
 
 export default function OutgoingNotifications() {
-  const {data, error, isLoading} = useSWR<{friendRequest: FriendRequestInfo[]}>('incoming', GetFriendRequests)
+  const {data, error, isLoading, mutate} = useSWR<{friendRequest: FriendRequestInfo[]}>('outgoing', GetOutgoingFriendRequests)
 
   return (
     <div className="w-full h-full">
@@ -20,7 +20,7 @@ export default function OutgoingNotifications() {
           (
             data.friendRequest.map(request =>{
               return (
-                <NotificationCard notification={request} key={request.id} incoming={false}/>
+                <NotificationCard notification={request} key={request.id} incoming={false} mutate={mutate}/>
               )
             })
           ):

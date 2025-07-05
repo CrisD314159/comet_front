@@ -3,6 +3,7 @@ import { UserInfo } from "@/lib/types/types"
 import {LockKeyhole, MessageCircle, UserMinus, LockKeyholeOpen } from "lucide-react"
 import FriendActionModal from "./FriendCardActions/FriendActionModal"
 import { BlockFriend, DeleteFriend, UnblockFriend } from "@/lib/serverActions/putActions/PutActions"
+import Link from "next/link"
 
 interface FriendCardProps{
   friend: UserInfo
@@ -41,7 +42,9 @@ export default function FriendCard({friend, mutate, blocked}:FriendCardProps) {
       user={friend}/>
       :
       <>
-        <button className="btn btn-soft btn-primary"><MessageCircle/></button>
+        <Link href={`/dashboard/chat/${friend.id}`}>
+          <button  className="btn btn-soft btn-primary"><MessageCircle/></button>
+        </Link>
         <FriendActionModal ButtonIcon={UserMinus} 
         action={DeleteFriend} 
         buttonColor="error"

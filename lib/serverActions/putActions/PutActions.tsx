@@ -106,7 +106,7 @@ export async function UnblockFriend(friendId:string) {
   return await PutSwrMethod("/friends/unblockFriend", {friendId})
 }
 export async function DeleteFriend(friendId:string) {
-  return await PutSwrMethod("/friends/unblockFriend", {friendId})  
+  return await PutSwrMethod("/friends/deleteFriend", {friendId})  
 }
 
 async function PutSwrMethod(path:string, values:object){

@@ -56,7 +56,7 @@ export async function SignUp(formstate:FormResponse, formdata:FormData) {
   
 }
 
-export async function SendFriendRequest(receiver:string, message:string) {
+export async function SendFriendRequest(receiver:string) {
   await checkIsLoggedIn()
   const token = (await cookies()).get("token")?.value
 
@@ -64,12 +64,12 @@ export async function SendFriendRequest(receiver:string, message:string) {
 
   try {
     response = await fetch(`${APIURL}/friends/sendFriendRequest`, {
-      method:'PUT',
+      method:'POST',
       headers:{
         "Authorization":`Bearer ${token}`,
         "Content-Type":"application/json"
       },
-      body:JSON.stringify({receiver, message})
+      body:JSON.stringify({receiver})
     })
     
   } catch {

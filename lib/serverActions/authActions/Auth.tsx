@@ -1,5 +1,5 @@
 'use server'
-import { APIURL, FormResponse } from "@/lib/types/types";
+import { APIURL, FormResponse, isNullOrEmpty } from "@/lib/types/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -8,7 +8,7 @@ export async function checkIsLoggedIn() {
     const token = (await cookies()).get('token')?.value
     const refreshToken = (await cookies()).get('refresh')?.value
     
-    if(!token && !refreshToken){
+    if(!token){
       return await RefreshToken(refreshToken)
     }
   
@@ -144,4 +144,15 @@ export async function CreateSession(token:string, refreshToken:string) {
     sameSite: 'lax',
     path: '/',
   })
+}
+
+export async function CreateSessionThirdParty(token:string, refreshToken:string) {
+  if(isNullOrEmpty(token) || isNullOrEmpty(refreshToken)) {
+    console.error("no token or refresh provided")
+    redirect('/')
+  }
+
+  await CreateSession(token, refreshToken)
+
+  redirect('/dashboard?tab=friends')
 }

@@ -4,6 +4,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --buuble: #cbdaf7;
+  --str-chat__message-list-background-color: var(--background) !important;
 }
 
 @theme inline {
@@ -15,13 +17,81 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #00001a;
     --foreground: #ededed;
+     --buuble: #242455;
   }
 }
+
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+.str-chat__channel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.str-chat__channel-header{
+    background-color: var(--background) !important;
+    color: var(--foreground) !important;
+
+}
+
+.str-chat__container {
+
+  width: 100%;
+  margin: 0 auto !important;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background-color: var(--background) !important;
+  overflow: hidden;
+}
+
+.str-chat__message-input{
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+}
+.str-chat__textarea__textarea{
+  color: var(--foreground) !important;
+
+}
+
+.str-chat__list {
+  padding: 12px;
+  background-color: var(--background) !important;
+}
+
+.str-chat__list-notifications {
+  display: none;
+}
+
+.str-chat__message-input {
+  border-top: 1px solid #ddd;
+}
+
+.str-chat__message-bubble{
+    background-color: var(--buuble) !important;
+    color: var(--foreground) !important;
+}
+
+.str-chat__empty-channel{
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+
+}
+
+.str-chat{
+  --str-chat__message-list-background-color: var(--background);
+    --str-chat__primary-color: #96000f;
+  --str-chat__active-primary-color: #004d40;
+  --str-chat__surface-color: #f5f5f5;
+  --str-chat__secondary-surface-color: #fafafa;
+  --str-chat__primary-surface-color: #e0f2f1;
+  --str-chat__primary-surface-color-low-emphasis: #edf7f7;
+  --str-chat__border-radius-circle: 6px;
+  --str-chat__own-message-bubble-background-color: #96000f;
 }

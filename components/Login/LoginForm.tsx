@@ -1,5 +1,4 @@
 'use client'
-
 import { LogIn } from "@/lib/serverActions/authActions/Auth"
 import { startTransition, useActionState, useEffect } from "react"
 import toast from "react-hot-toast"
@@ -73,6 +72,7 @@ export default function LoginForm() {
               >
                 Sign in
               </button>
+
             </div>
           </form>
 
