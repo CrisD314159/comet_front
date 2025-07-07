@@ -17,20 +17,20 @@ export async function SignUp(formstate:FormResponse, formdata:FormData) {
   if(!validations.success){
     return {
       success: false,
-      message: validations.error.message
+      message: validations.error.errors.map(e => `${e.path}: ${e.message}`).join('\n')
     }
   }
 
-  const {email, name, password, country} = validations.data
+  const {email, name, password, country, profilePictureUrl} = validations.data
 
   let response: Response
   try {
-    response = await fetch(`${APIURL}/users/signup`, {
+    response = await fetch(`${APIURL}/users/signUp`, {
       method:'POST',
       headers:{
         "Content-Type":"application/json"
       },
-      body:JSON.stringify({email, name, password, country})
+      body:JSON.stringify({email, name, password, country, profilePictureUrl})
     })
     
   } catch {
@@ -39,6 +39,8 @@ export async function SignUp(formstate:FormResponse, formdata:FormData) {
       message: "An unexpected error occurred whlie connecting to server"
     }    
   }
+
+  console.log(response.status);
 
   if(response.status === 201){
     return {
@@ -91,7 +93,7 @@ export async function ResetAccount(formResponse:FormResponse, formdata:FormData)
   if(!validations.success){
     return {
       success: false,
-      message: validations.error.flatten().fieldErrors
+      message: validations.error.errors.map(e => `${e.path}: ${e.message}`).join('\n')
     }
   }
 

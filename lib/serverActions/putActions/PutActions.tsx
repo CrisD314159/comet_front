@@ -14,7 +14,7 @@ export async function ChangePassword(formResponse:FormResponse, formdata:FormDat
     if(!validations.success){
       return {
         success: false,
-        message: validations.error.flatten().fieldErrors
+        message: validations.error.errors.map(e => `${e.path}: ${e.message}`).join('\n')
       }
     }
 
@@ -38,7 +38,7 @@ export async function UpdateUser(formResponse:FormResponse, formdata:FormData) {
   if(!validations.success){
   return {
     success: false,
-    message: validations.error.errors.toString()
+    message: validations.error.errors.map(e => `${e.path}: ${e.message}`).join('\n')
     }
   }
 
@@ -55,11 +55,11 @@ export async function VerifyAccount(formResponse:FormResponse, formdata:FormData
     if(!validations.success){
       return {
         success: false,
-        message: validations.error.flatten().fieldErrors
+        message: validations.error.errors.map(e => `${e.path}: ${e.message}`).join('\n')
       }
     }
 
-    return await PutFormMethod("/auth/changePassword", {...validations.data}, undefined)
+    return await PutFormMethod("/users/verifyAccount", {...validations.data}, undefined)
   
   
 }

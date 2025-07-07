@@ -6,6 +6,8 @@ import { useEffect, useState } from "react"
 import useSWR from "swr"
 import UserSettingsEditForm from "./UserSettingsEditModal";
 import LogoutModal from "../Logout/LogoutModal";
+import Image from "next/image";
+import DeleteAccountModal from "../DeleteAccount/DeleteAccountModal";
 
 export default function UserSettingsComponent() {
   const { data, error, isLoading, mutate } = useSWR<UserInfo>('userOverview', GetUserOverview)
@@ -19,8 +21,6 @@ export default function UserSettingsComponent() {
     }
   },[data])
   
-
-
 
   return (
       <div className={`flex flex-col h-screen w-full`} >
@@ -37,10 +37,11 @@ export default function UserSettingsComponent() {
               <div className="px-5 flex flex-col items-center justify-center">
                 <div className="avatar">
                   <div className="w-50 h-50 rounded-full" style={{boxShadow:`0px 20px 30px 7px ${color}`}}>
-                    <img src={data.profilePicture} alt={data.name} />  
+                    <Image width={100} height={100} src={data.profilePicture} alt={data.name} />  
                   </div>
                 </div>
-                  <h2 className="text-2xl font-semibold mt-6">{data.name}</h2>
+                  <h2 className="text-2xl font-semibold mt-10">{data.name}</h2>
+                  <h3 className="text-lg menu-title font-semibold mt-5">{data.email}</h3>
 
                 <div className="max-md:h-36 h-[65%] sm:w-[50%] mx-10 mt-7 sm:pr-3 overflow-y-scroll">
                   <p className="dark:text-white/80 text-center   ">{data.biography}</p>
@@ -50,6 +51,7 @@ export default function UserSettingsComponent() {
               <div className="flex flex-col items-center gap-2">
                 <UserSettingsEditForm user={data} mutate={mutate}/>
                 <LogoutModal/>
+                <DeleteAccountModal/>
               </div>
 
               </div>

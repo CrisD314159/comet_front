@@ -4,6 +4,7 @@ import {LockKeyhole, MessageCircle, UserMinus, LockKeyholeOpen } from "lucide-re
 import FriendActionModal from "./FriendCardActions/FriendActionModal"
 import { BlockFriend, DeleteFriend, UnblockFriend } from "@/lib/serverActions/putActions/PutActions"
 import Link from "next/link"
+import Image from "next/image"
 
 interface FriendCardProps{
   friend: UserInfo
@@ -18,7 +19,7 @@ export default function FriendCard({friend, mutate, blocked}:FriendCardProps) {
     <div className="flex items-center gap-4 mb-4">
       <div className="avatar">
         <div className="w-20 h-20 rounded-full ring-2 ring-indigo-400 ring-offset-2 ring-offset-black/20">
-          <img src={friend.profilePicture} alt={friend.name} />
+          <Image width={80} height={80} src={friend.profilePicture} alt={friend.name} />
         </div>
       </div>
       <h2 className="text-2xl font-semibold">{friend.name}</h2>

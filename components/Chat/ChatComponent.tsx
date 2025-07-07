@@ -10,25 +10,29 @@ import {
   Window,
 } from "stream-chat-react";
 import { Channel, StreamChat } from "stream-chat";
+ 
+
 
 import CallButton from "../Calls/CallButton";
 import toast from "react-hot-toast";
 import useSWR from "swr";
 import { GetUserChatToken, GetUserOverview } from "@/lib/serverActions/getActions/GetActions";
 import { ChatTokenResponse, getChannelId, UserInfo } from "@/lib/types/types";
-import { House } from "lucide-react";
-import Link from "next/link";
+import HomeButton from "./HomeButton";
 interface ChatProps{
   targetUserId:string
 
 }
-const STREAM_API_KEY = process.env.NEXT_STEAM_API_KEY ?? "";
+
+
 
 export default function ChatComponent({targetUserId}:ChatProps) {
   
+
     const [chatClient, setChatClient] = useState<StreamChat | null>(null);
     const [channel, setChannel] = useState<Channel | null>(null);
     const [loading, setLoading] = useState(true);
+    const [didJoin, setDidJoin] = useState(false);
 
     const {data: userData, error: userError, isLoading: userIsLoading} = useSWR<UserInfo>('authUser', GetUserOverview)
 
@@ -39,10 +43,11 @@ export default function ChatComponent({targetUserId}:ChatProps) {
   
     useEffect(() => {
       const initChat = async () => {
-        if (!tokenData?.token || !userData) return;
+        if (didJoin || !tokenData?.token || !userData) return;
   
         try {
           console.log("Initializing stream chat client...");
+          const STREAM_API_KEY = process.env.NEXT_PUBLIC_STEAM_API_KEY ?? "";
   
           const client = StreamChat.getInstance(STREAM_API_KEY);
   
@@ -67,7 +72,8 @@ export default function ChatComponent({targetUserId}:ChatProps) {
           });
   
           await currChannel.watch();
-  
+          
+          setDidJoin(true)
           setChatClient(client);
           setChannel(currChannel);
         } catch (error) {
@@ -79,7 +85,7 @@ export default function ChatComponent({targetUserId}:ChatProps) {
       };
   
       initChat();
-    }, [tokenData, userData, targetUserId]);
+    }, [tokenData, userData, targetUserId, didJoin]);
   
     const handleVideoCall = () => {
       if (channel) {
@@ -110,15 +116,11 @@ export default function ChatComponent({targetUserId}:ChatProps) {
         <Chat client={chatClient}>
           <ChannelComponent channel={channel} >
             <div className="w-full relative">
-            
-              <div className="p-3 border-b flex items-center z-50 justify-end max-w-7xl mx-auto w-full absolute top-0 right-15">
-                <Link href="/dashboard">
-                  <button className="btn btn-info btn-sm text-white">
-                    <House/>
-                  </button>
-                </Link>
+              <div className="absolute top-0 right-15 max-sm:right-5">
+                <HomeButton/>
+                <CallButton handleVideoCall={handleVideoCall} />
+
               </div>
-              <CallButton handleVideoCall={handleVideoCall} />
               <Window>
                 <ChannelHeader />
                 <MessageList />

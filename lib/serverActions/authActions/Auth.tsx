@@ -63,6 +63,9 @@ export async function LogIn(formstate:FormResponse, formdata:FormData) {
     const {token, refreshToken} = await response.json()
     await CreateSession(token, refreshToken)
     redirect("/dashboard")
+  }
+  if(response.status === 401){
+    redirect('/verifyAccount')
   }else{
     const {success, message} = await response.json()
     return {

@@ -16,6 +16,7 @@ export type FormResponse =
 export interface UserInfo{
   id: string,
   name: string,
+  email:string
   profilePicture: string,
   biography: string,
   country: string

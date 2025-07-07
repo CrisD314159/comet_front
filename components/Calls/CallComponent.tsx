@@ -18,12 +18,13 @@ import useSWR from "swr";
 import { GetUserChatToken, GetUserOverview } from "@/lib/serverActions/getActions/GetActions";
 import { ChatTokenResponse, UserInfo } from "@/lib/types/types";
 
-const STREAM_API_KEY = process.env.NEXT_STEAM_API_KEY ?? "";
+
 
 interface CallComponentProps{
   callId:string
 }
 const CallComponent = ({callId}:CallComponentProps) => {
+  
   const [client, setClient] = useState<StreamVideoClient | null>(null);
   const [call, setCall] = useState<Call | null>(null);
   const [isConnecting, setIsConnecting] = useState(true);
@@ -49,6 +50,7 @@ const CallComponent = ({callId}:CallComponentProps) => {
           name: userData.name,
           image: userData.profilePicture,
         };
+        const STREAM_API_KEY = process.env.NEXT_PUBLIC_STEAM_API_KEY ?? "";
 
         const videoClient = new StreamVideoClient({
           apiKey: STREAM_API_KEY,
