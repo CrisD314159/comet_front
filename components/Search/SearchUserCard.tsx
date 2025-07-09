@@ -4,6 +4,7 @@ import {UserRoundPlus } from "lucide-react"
 import { SendFriendRequest } from "@/lib/serverActions/postActions/PostActions"
 import toast from "react-hot-toast"
 import { useState } from "react"
+import Image from "next/image"
 
 interface SearchUserCardProps{
   friend: UserInfo
@@ -30,7 +31,7 @@ export default function SearchUserCard({friend}:SearchUserCardProps) {
       <div className="flex items-center gap-4 mb-4">
         <div className="avatar">
           <div className="w-20 h-20 rounded-full ring-2 ring-indigo-400 ring-offset-2 ring-offset-black/20">
-            <img src={friend.profilePicture} alt={friend.name} />
+            <Image height={80} width={80} src={friend.profilePicture} alt={friend.name} />
           </div>
         </div>
         <h2 className="text-2xl font-semibold">{friend.name}</h2>
