@@ -2,10 +2,19 @@
 
 import { ChangePassword } from "@/lib/serverActions/putActions/PutActions"
 import { useSearchParams } from "next/navigation"
-import { startTransition, useActionState, useEffect } from "react"
+import { startTransition, Suspense, useActionState, useEffect } from "react"
 import toast from "react-hot-toast"
 
+
 export default function ChangePasswordPage() {
+  return (
+    <Suspense>
+      <ChangePasswordPageComponent/>
+    </Suspense>
+  )
+}
+
+function ChangePasswordPageComponent() {
   const params = useSearchParams()
   const code = params.get('code')
 
@@ -83,3 +92,4 @@ export default function ChangePasswordPage() {
     </div>
   )
 }
+
