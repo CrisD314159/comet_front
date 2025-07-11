@@ -1,7 +1,9 @@
 import LoginForm from "@/components/Login/LoginForm";
 import GoogleIcon from "@/lib/Icons/GoogleIcon";
+import { Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+
 
 export default function Home() {
   const googleAuthEndpoint = process.env.NEXT_GOOGLE_END ?? '#'
@@ -35,6 +37,14 @@ export default function Home() {
             Do not have an account?{' '}
             <Link href="/signup" className="font-semibold text-[#000080] hover:text-indigo-500 dark:text-indigo-700">
               Sign up here
+            </Link>
+          </p>
+          <p className="flex flex-col items-center mt-5 gap-3">
+            <Link href={"https://github.com/CrisD314159/comet_front"}>
+              <Github width={30} height={30}/>
+            </Link>
+            <Link href={"https://crisdev-pi.vercel.app/"} className="font-semibold text-[#000080] hover:text-indigo-500 dark:text-indigo-700">
+              {"Creator's Page"}
             </Link>
           </p>
         </div>
