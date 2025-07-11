@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const id = uuidv4();
 console.log(id); // ej: '6f1e3b14-3d13-41f7-bb79-c733c2d7f78b'
-export const APIURL = "http://localhost:8080"
+export const APIURL = process.env.API_URL
 
 export type FormResponse =
 |{
