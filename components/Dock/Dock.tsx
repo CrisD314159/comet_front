@@ -47,7 +47,7 @@ const Dock = ({ children }: TabsProps) => {
 
   return (
     <div className="flex sm:flex-row flex-col h-full w-full max-md:relative ">
-      <div className="flex sm:flex-col flex-row justify-center sm:h-full sm:w-[50px] w-full space-y-4 backdrop-blur-xs
+      <div className="flex sm:flex-col flex-row sm:pb-0 pb-8 justify-center sm:h-full sm:w-[50px] w-full space-y-4 backdrop-blur-xs
        shadow-md p-2 absolute bottom-0 items-center z-50">
         {children.map(child => {
           if (!child?.props) return null

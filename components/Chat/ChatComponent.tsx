@@ -115,7 +115,7 @@ export default function ChatComponent({targetUserId}:ChatProps) {
       <div className="h-full">
         <Chat client={chatClient}>
           <ChannelComponent channel={channel} >
-            <div className="w-full relative">
+            <div className="w-full relative pb-9">
               <div className="absolute top-0 right-15 max-sm:right-5">
                 <HomeButton/>
                 <CallButton handleVideoCall={handleVideoCall} />

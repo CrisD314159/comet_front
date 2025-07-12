@@ -1,3 +1,4 @@
+'use client'
 import { AcceptFriendRequest, RejectFriendRequest } from "@/lib/serverActions/putActions/PutActions"
 import { FriendRequestInfo } from "@/lib/types/types"
 import toast from "react-hot-toast"
@@ -34,7 +35,7 @@ export default function NotificationCard({notification, incoming, mutate}:Notifi
 
 
   return (
-    <div className="w-[95%] h-[250px] max-md:h-[310px] flex sm:flex-row flex-col justify-between  mx-auto border border-white/20 rounded-2xl my-10 p-6 bg-white/5 backdrop-blur-md shadow-xl hover:shadow-indigo-500/30 transition-shadow duration-300 dark:text-white">
+    <div className="w-[95%] h-[250px] mt-5 max-md:h-[310px] flex sm:flex-row flex-col justify-between  mx-auto border border-white/20 rounded-2xl my-10 p-6 bg-white/5 backdrop-blur-md shadow-xl hover:shadow-indigo-500/30 transition-shadow duration-300 dark:text-white">
       <div>
         <div className="flex items-center gap-4 mb-4">
           <div className="avatar">
