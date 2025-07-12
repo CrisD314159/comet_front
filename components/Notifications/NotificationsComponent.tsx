@@ -1,10 +1,11 @@
 'use client'
 import dynamic from "next/dynamic"
 import { useState } from "react"
+import { GetFriendRequests, GetOutgoingFriendRequests } from "@/lib/serverActions/getActions/GetActions"
 
 
-const IncomingFriendRequestsDynamic = dynamic(()=> import("@/components/Notifications/IncomingNotifications"), {ssr:false})
-const OutgoingFriendRequestsDynamic = dynamic(()=> import("@/components/Notifications/OutgoingNotifications"), {ssr:false})
+const NotificationsListDynamic = dynamic(()=> import("@/components/Notifications/NotificationsList"), {ssr:false})
+
 
 export default function NotificationsComponent() {
 
@@ -22,9 +23,8 @@ export default function NotificationsComponent() {
 
   return (
       <div className={`flex flex-col h-screen w-full`} >
-        <h1 className="text-3xl font-bold mt-10 mb-2 sm:ml-20  mx-6">Notifications</h1>
-          <div className="mx-auto  ">
-            <div className="w-full flex justify-center ">
+        <h1 className="text-3xl font-bold mt-10 mb-10 sm:ml-20  mx-6">Notifications</h1>
+            <div className="w-full flex justify-center">
               <div className="w-[200px] h-16 rounded-4xl shadow-2xl top-25
               flex justify-center items-center gap-2 dark:bg-neutral-900
               ">
@@ -40,13 +40,11 @@ export default function NotificationsComponent() {
                   )
                 })}
               </div>
-
             </div>
 
-            {tabname ==='incoming' && (<IncomingFriendRequestsDynamic/>)}
-            {tabname ==='outgoing' && (<OutgoingFriendRequestsDynamic/>)}
+            {tabname ==='incoming' && (<NotificationsListDynamic FetchFunction={GetFriendRequests} incoming={true} notRequestsText="You have no incoming friend requests"/>)}
+            {tabname ==='outgoing' && (<NotificationsListDynamic FetchFunction={GetOutgoingFriendRequests} incoming={false} notRequestsText="You have no outgoing friend requests"/>)}
 
-          </div>
       </div>
   )
 }
